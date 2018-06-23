@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 from utils import db_execute
-from conf import DB_NAME
+from conf import db_name
 
 
 def setup_store(db_name):
@@ -30,6 +30,6 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
     if args.command == 'setup':
-        setup_store(DB_NAME)
+        setup_store(db_name)
     elif args.command == 'drop':
-        drop_store(DB_NAME)
+        drop_store(db_name)

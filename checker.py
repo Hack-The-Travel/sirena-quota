@@ -47,7 +47,7 @@ if __name__ == '__main__':
     print('Debug. Trying to send request to Sirena.')
     account = conf.accounts[1]
     save_check(
-        conf.DB_NAME,
+        conf.db_name,
         account['account'],
         get_ticket_quota(account['user'], account['password'])
     )
