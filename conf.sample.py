@@ -12,3 +12,14 @@ accounts = [
         'password': 'newsecret',
     }
 ]
+
+accounts_dict = {
+    'OTA.TCH': {
+        'user': 'ota_grs101',
+        'password': 'secret',
+    },
+    'OTA.UT': {
+        'user': 'ota_grs102',
+        'password': 'newsecret',
+    },
+}
