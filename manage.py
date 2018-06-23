@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import sqlite3
 from utils import db_execute
 from conf import DB_NAME
 
