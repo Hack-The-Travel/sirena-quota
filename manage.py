@@ -8,6 +8,7 @@ def setup_db(db_name):
         db_name,
         '''CREATE TABLE IF NOT EXISTS quota_check (
             id INTEGER PRIMARY KEY,
+            account VARCHAR,
             quota INTEGER,
             created_at integer(4) not null default (strftime('%s','now'))
         )'''
