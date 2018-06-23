@@ -53,6 +53,6 @@ if __name__ == '__main__':
                 account['code'],
                 get_ticket_quota(account['user'], account['password'])
             )
-            print('{:20} - ok'.format(account['account']))
+            print('{:20} - ok'.format(account['code']))
         except Exception:
-            print('{:20} - error'.format(account['account']))
+            print('{:20} - error'.format(account['code']))
