@@ -28,7 +28,6 @@ def get_ticket_quota(user, password):
        </soapenv:Body>
     </soapenv:Envelope>'''
     r = requests.post(conf.gateway, auth=(user, password), data=rq)
-    print(r.content)
     r.raise_for_status()
     return extract_ticket_quota(r.text)
 
