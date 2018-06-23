@@ -50,7 +50,7 @@ if __name__ == '__main__':
         try:
             save_check(
                 conf.db_name,
-                account['account'],
+                account['code'],
                 get_ticket_quota(account['user'], account['password'])
             )
             print('{:20} - ok'.format(account['account']))
