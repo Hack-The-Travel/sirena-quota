@@ -16,6 +16,10 @@ def setup_db(db_name):
     )
 
 
+def drop_db(db_name):
+    db_execute(db_name, 'DROP TABLE IF EXISTS quota_check')
+
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('command', type=str, choices=['setup', 'drop'],
@@ -27,3 +31,5 @@ if __name__ == '__main__':
     args = parse_args()
     if args.command == 'setup':
         setup_db(DB_NAME)
+    elif args.command == 'drop':
+        drop_db(DB_NAME)
