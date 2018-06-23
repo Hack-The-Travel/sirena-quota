@@ -21,7 +21,9 @@ def get_ticket_quota(user, password, gateway='https://ws.sirena-travel.ru/swc-ma
     :return: ticket quota.
     :rtype: int
     """
-    rq = '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.swc.comtech/">
+    rq = '''<soapenv:Envelope
+       xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+       xmlns:ser="http://service.swc.comtech/">
        <soapenv:Header/>
        <soapenv:Body>
           <ser:getTicketQuota>
