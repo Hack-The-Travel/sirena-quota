@@ -46,10 +46,13 @@ def save_check(db_name, account, ticket_quota):
 
 
 if __name__ == '__main__':
-    print('Debug. Trying to send request to Sirena.')
-    account = conf.accounts[1]
-    save_check(
-        conf.db_name,
-        account['account'],
-        get_ticket_quota(account['user'], account['password'])
-    )
+    for account in conf.accounts:
+        try:
+            save_check(
+                conf.db_name,
+                account['account'],
+                get_ticket_quota(account['user'], account['password'])
+            )
+            print('{:20} - ok'.format(account['account']))
+        except Exception:
+            print('{:20} - error'.format(account['account']))
