@@ -4,7 +4,7 @@ from utils import db_execute
 from conf import DB_NAME
 
 
-def setup_db(db_name=DB_NAME):
+def setup_db(db_name):
     db_execute(
         db_name,
         '''CREATE TABLE IF NOT EXISTS quota_check (
@@ -16,5 +16,5 @@ def setup_db(db_name=DB_NAME):
 
 
 if __name__ == '__main__':
-    setup_db()
+    setup_db(DB_NAME)
     print('`quota_check` db was created')

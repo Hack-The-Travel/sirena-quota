@@ -19,6 +19,6 @@ class TestDB():
 
     def test_setup_db(self):
         try:
-            setup_db(db_name=self.db_name)
+            setup_db(self.db_name)
         except sqlite3.Error:
             pytest.fail('Unexpected error trying to setup DB', pytrace=True)
