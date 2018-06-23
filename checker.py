@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import requests
+from utils import db_execute
 import conf
 
 
@@ -32,7 +33,20 @@ def get_ticket_quota(user, password):
     return extract_ticket_quota(r.text)
 
 
+def save_check(db_name, account, ticket_quota):
+    db_execute(
+        db_name,
+        '''INSERT INTO quota_check (account, quota)
+           VALUES ('{account}', {quota})
+        '''.format(account=account, quota=ticket_quota)
+    )
+
+
 if __name__ == '__main__':
     print('Debug. Trying to send request to Sirena.')
     account = conf.accounts[1]
-    print(get_ticket_quota(account['user'], account['password']))
+    save_check(
+        conf.DB_NAME,
+        account['account'],
+        get_ticket_quota(account['user'], account['password'])
+    )
