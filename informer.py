@@ -9,7 +9,6 @@ if __name__ == '__main__':
         conf.db_name,
         'SELECT account, quota, created_at FROM quota_check GROUP BY account HAVING MAX(created_at)'
     )
-    print(rows)
     info_items = list()
     for row in rows:
         if row[0] not in conf.accounts:
