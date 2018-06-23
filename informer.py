@@ -12,12 +12,12 @@ if __name__ == '__main__':
     print(rows)
     info_items = list()
     for row in rows:
-        if row[0] not in conf.accounts_dict:
+        if row[0] not in conf.accounts:
             continue  # unknown account code
         info_items.append({
             'code': row[0],
             'quota': row[1],
             'datetime': time.strftime('%Y-%m-%d %H:%M:%S (%Z)', time.localtime(row[2])),
-            'alert': row[1] <= conf.accounts_dict[row[0]].get('alert', 0),
+            'alert': row[1] <= conf.accounts[row[0]].get('alert', 0),
         })
     print(info_items)
