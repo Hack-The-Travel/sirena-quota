@@ -2,7 +2,7 @@
 import sqlite3
 import os
 import pytest
-from manage import setup_db
+from manage import setup_store
 
 
 class TestDB():
@@ -17,8 +17,8 @@ class TestDB():
         conn.close()
         assert os.path.isfile(self.db_name)
 
-    def test_setup_db(self):
+    def test_setup_store(self):
         try:
-            setup_db(self.db_name)
+            setup_store(self.db_name)
         except sqlite3.Error:
-            pytest.fail('Unexpected error trying to setup DB', pytrace=True)
+            pytest.fail('Unexpected error trying to setup store', pytrace=True)
