@@ -14,8 +14,8 @@ rq = '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelop
 
 def get_quota():
     r = requests.post(conf.gateway, auth=(conf.user, conf.password), data=rq)
-    r.raise_for_status()
     print(r.content)
+    r.raise_for_status()
 
 
 if __name__ == '__main__':
