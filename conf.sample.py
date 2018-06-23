@@ -10,3 +10,4 @@ accounts = {
         'password': 'newsecret',
     },
 }
+sender = ('Anton Yakovlev', 'anton.yakovlev@a.gentlemantravel.club')
