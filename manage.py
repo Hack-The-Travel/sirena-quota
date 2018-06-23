@@ -17,3 +17,4 @@ def setup_db(db_name=DB_NAME):
 
 if __name__ == '__main__':
     setup_db()
+    print('`quota_check` db was created')
