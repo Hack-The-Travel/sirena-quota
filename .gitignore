@@ -1,5 +1,6 @@
 # general things to ignore
 *.py[cod]
+.pytest_cache/
 
 # Mr Developer
 .idea/

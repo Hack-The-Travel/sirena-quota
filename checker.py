@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
+import re
 import requests
 import conf
+
+
+def extract_ticket_quota(ticket_quota_response):
+    matches = re.findall(r'<quota>(\d+)<\/quota>', ticket_quota_response)
+    return int(matches[0])
 
 
 def get_ticket_quota(user, password):
@@ -13,7 +19,6 @@ def get_ticket_quota(user, password):
     :return: ticket quota.
     :rtype: int
     """
-    ticket_quota = 0
     rq = '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.swc.comtech/">
        <soapenv:Header/>
        <soapenv:Body>
@@ -25,7 +30,7 @@ def get_ticket_quota(user, password):
     r = requests.post(conf.gateway, auth=(user, password), data=rq)
     print(r.content)
     r.raise_for_status()
-    return ticket_quota
+    return extract_ticket_quota(r.text)
 
 
 if __name__ == '__main__':
