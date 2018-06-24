@@ -24,7 +24,26 @@ def prepare_body_text(accounts_info, sender):
         'Дружески,\r\n'
         '{sender}'
     )
-    return body_text.format(alert=alert_msg, status_msg=status_msg, sender=sender)
+    body_html = (
+        '<html>'
+        '<head></head>'
+        '<body>'
+        '<p>Приветствую</p>'
+        '{alert}'
+        '<p>Состояние стоков:<br />{status_msg}</p>'
+        '<p>'
+        '<br /><br />'
+        '--<br />'
+        'Дружески,<br />'
+        '{sender}'
+        '</p>'
+        '</body>'
+        '</html>'
+    )
+    return (
+        body_text.format(alert=alert_msg, status_msg=status_msg, sender=sender),
+        body_html.format(alert=alert_msg, status_msg=status_msg.replace('\r\n', '<br />'), sender=sender)
+    )
 
 
 if __name__ == '__main__':
