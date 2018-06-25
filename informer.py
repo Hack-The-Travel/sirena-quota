@@ -111,10 +111,8 @@ if __name__ == '__main__':
             'alert': row[1] <= conf.accounts[row[0]].get('alert', 0),
         })
         alert = info_items[-1]['alert'] or alert
-    subject = 'Состояние стоков в Сирене'
-    recipient = conf.recipient_info
+    send_mail(conf.sender, conf.recipient_info, 'Состояние стоков в Сирене',
+              prepare_body(info_items, conf.sender[0]), conf.smtp_user, conf.smtp_password)
     if alert:
-        subject = 'Срочно пополните сток в Сирене'
-        recipient = conf.recipient_alert
-    send_mail(conf.sender, recipient, subject, prepare_body(info_items, conf.sender[0]),
-              conf.smtp_user, conf.smtp_password)
+        send_mail(conf.sender, conf.recipient_alert, 'Срочно пополните сток в Сирене',
+                  prepare_body(info_items, conf.sender[0]), conf.smtp_user, conf.smtp_password)
