@@ -100,6 +100,7 @@ if __name__ == '__main__':
         'SELECT account, quota, created_at FROM quota_check GROUP BY account HAVING MAX(created_at)'
     )
     info_items = list()
+    alert = False
     for row in rows:
         if row[0] not in conf.accounts:
             continue  # unknown account code
@@ -109,4 +110,11 @@ if __name__ == '__main__':
             'datetime': time.strftime('%Y-%m-%d %H:%M:%S (%Z)', time.localtime(row[2])),
             'alert': row[1] <= conf.accounts[row[0]].get('alert', 0),
         })
-    print(prepare_body_text(info_items, conf.sender[0]))
+        alert = info_items[-1]['alert'] or alert
+    subject = 'Состояние стоков в Сирене'
+    recipient = conf.recipient_info
+    if alert:
+        subject = 'Срочно пополните сток в Сирене'
+        recipient = conf.recipient_alert
+    send_mail(conf.sender, recipient, subject, prepare_body(info_items, conf.sender[0]),
+              conf.smtp_user, conf.smtp_password)
