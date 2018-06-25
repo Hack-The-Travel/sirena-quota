@@ -11,3 +11,7 @@ accounts = {
     },
 }
 sender = ('Anton Yakovlev', 'anton.yakovlev@a.gentlemantravel.club')
+smtp_gateway= 'email-smtp.eu-west-1.amazonaws.com'
+smtp_port = 587
+smtp_user = 'aws_ses_user'
+smtp_password = 'aws_ses_user_password'

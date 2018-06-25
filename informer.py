@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+import smtplib
+import email.utils
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import time
 from utils import db_execute
 import conf
@@ -44,6 +48,35 @@ def prepare_body_text(accounts_info, sender):
         body_text.format(alert=alert_msg, status_msg=status_msg, sender=sender),
         body_html.format(alert=alert_msg, status_msg=status_msg.replace('\r\n', '<br />'), sender=sender)
     )
+
+
+def send_mail(sender, recipient, subject, body, smtp_user, smtp_password,
+              smtp_gateway='email-smtp.eu-west-1.amazonaws.com', smtp_port=587):
+    """Sends mail via SMTP server.
+
+    :param sender: tuple of two strings, ('Sender Name', 'sender@email.com')
+    :param recipient: str, recipient email, e.g. 'recipient@email.com'
+    :param subject: str, email subject
+    :param body: tuple of two strings, (body_text, body_html)
+    :param smtp_gateway: str, smtp server endpoint
+    :param smtp_port: int, smtp server port
+    :param smtp_user: str, login of smtp user
+    :param smtp_password: str, password of smtp user
+    """
+    body_text, body_html = body
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = subject
+    msg['From'] = email.utils.formataddr(sender)
+    msg['To'] = recipient
+    msg.attach(MIMEText(body_text, 'plain'))
+    msg.attach(MIMEText(body_html, 'html'))
+    server = smtplib.SMTP(smtp_gateway, smtp_port)
+    server.ehlo()
+    server.starttls()
+    server.ehlo()
+    server.login(smtp_user, smtp_password)
+    server.sendmail(sender[1], recipient, msg.as_string())
+    server.close()
 
 
 if __name__ == '__main__':
