@@ -8,7 +8,22 @@ from utils import db_execute
 import conf
 
 
-def prepare_body_text(accounts_info, sender):
+def prepare_body(accounts_info, sender_name):
+    """Returns message body in text and html format.
+
+    Structure of accounts_info
+    >>> accounts_info = [{
+    >>>     'code': 'OTA.TCH',
+    >>>     'quota': 985,
+    >>>     'datetime': '2018-06-23 19:26:16 (MSK)',
+    >>>     'alert': False,
+    >>> }]
+
+    :param accounts_info: list, accounts info, see above description of element structure.
+    :param sender_name: str, name of sender used in signature.
+    :return: tuple of two strings, (body_text, body_html)
+    :rtype: tuple
+    """
     status_msg = ''
     alert_accounts = list()
     for account in accounts_info:
@@ -45,8 +60,8 @@ def prepare_body_text(accounts_info, sender):
         '</html>'
     )
     return (
-        body_text.format(alert=alert_msg, status_msg=status_msg, sender=sender),
-        body_html.format(alert=alert_msg, status_msg=status_msg.replace('\r\n', '<br />'), sender=sender)
+        body_text.format(alert=alert_msg, status_msg=status_msg, sender=sender_name),
+        body_html.format(alert=alert_msg, status_msg=status_msg.replace('\r\n', '<br />'), sender=sender_name)
     )
 
 
