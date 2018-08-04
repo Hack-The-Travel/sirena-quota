@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 import base64
-from amadeus import get_password_digest
+from amadeus import get_password_digest, get_nonce
 
 
 class TestAmadeus:
@@ -18,3 +18,6 @@ class TestAmadeus:
         password_digest = get_password_digest(nonce, timestamp, password)
         password_digest_64 = base64.b64encode(password_digest).decode('utf-8')
         assert password_digest_64 == self.password_digest_64
+
+    def test_get_nonce_lenght(self):
+        assert len(get_nonce(100)) == 100
