@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 import requests
+import string
+import random
+import uuid
+import base64
+from hashlib import sha1
+from datetime import datetime
 
 AWS_GATE = 'https://production.webservices.amadeus.com'
 
@@ -44,6 +50,24 @@ def security_authenticate():
     </soapenv:Envelope>'''.format(user='', password='', office='', organization='')
     r = requests.post(AWS_GATE, headers=headers, data=rq)
     print(r.text)
+
+
+def get_nonce(n=8):
+    chars = string.printable
+    return ''.join(random.SystemRandom().choice(chars) for _ in range(n))
+
+
+def encode_base64(s):
+    s = s if isinstance(s, (bytes, bytearray)) else s.encode('ascii')
+    return base64.b64encode(s).decode('utf-8')
+
+
+def get_password_digest(nonce, timestamp, password):
+    nonce = nonce.encode('ascii')
+    password = password.encode('ascii')
+    timestamp = timestamp.encode('ascii')
+    password_digest = sha1(nonce + timestamp + sha1(password).digest()).digest()
+    return encode_base64(password_digest)
 
 
 def command_cryptic():
