@@ -53,6 +53,12 @@ def security_authenticate():
 
 
 def get_nonce(n=8):
+    """Returns random string of length n
+
+    :param n: int, length of the returned string
+    :return: random string
+    :rtype: str
+    """
     chars = string.printable
     return ''.join(random.SystemRandom().choice(chars) for _ in range(n))
 
