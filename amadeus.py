@@ -64,11 +64,6 @@ def get_nonce(n: int=8) -> bytes:
     return random_string.encode('ascii')
 
 
-def encode_base64(s):
-    s = s if isinstance(s, (bytes, bytearray)) else s.encode('ascii')
-    return base64.b64encode(s).decode('utf-8')
-
-
 def get_password_digest(nonce: bytes, timestamp: bytes, password: bytes) -> bytes:
     """Generates password digest
 
