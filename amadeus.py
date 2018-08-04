@@ -69,12 +69,16 @@ def encode_base64(s):
     return base64.b64encode(s).decode('utf-8')
 
 
-def get_password_digest(nonce, timestamp, password):
-    nonce = nonce.encode('ascii')
-    password = password.encode('ascii')
-    timestamp = timestamp.encode('ascii')
-    password_digest = sha1(nonce + timestamp + sha1(password).digest()).digest()
-    return encode_base64(password_digest)
+def get_password_digest(nonce: bytes, timestamp: bytes, password: bytes) -> bytes:
+    """Generates password digest
+
+    :param nonce: bytes, random string.
+    :param timestamp: bytes, current UTC timestamp in ISO format, e.g. '2018-08-04T17:13:14.105Z'.
+    :param password: bytes, raw password obtained from Amadeus.
+    :return: password digest.
+    :rtype: bytes
+    """
+    return sha1(nonce + timestamp + sha1(password).digest()).digest()
 
 
 def command_cryptic():

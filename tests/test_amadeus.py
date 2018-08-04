@@ -15,4 +15,8 @@ class TestAmadeus:
         assert encode_base64(self.nonce) == self.nonce_encoded
 
     def test_get_password_digest(self):
-        assert get_password_digest(self.nonce, self.timestamp, self.password) == self.password_digest
+        nonce = self.nonce.encode('ascii')
+        timestamp = self.timestamp.encode('ascii')
+        password = self.password.encode('ascii')
+        password_digest = get_password_digest(nonce, timestamp, password)
+        assert encode_base64(password_digest) == self.password_digest
