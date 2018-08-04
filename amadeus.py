@@ -52,7 +52,7 @@ def security_authenticate():
     print(r.text)
 
 
-def get_nonce(n=8):
+def get_nonce(n: int=8) -> bytes:
     """Returns random byte string of length n
 
     :param n: int, length of the returned string
