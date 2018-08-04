@@ -7,50 +7,6 @@ import base64
 from hashlib import sha1
 from datetime import datetime
 
-AWS_GATE = 'https://production.webservices.amadeus.com'
-
-
-def security_authenticate():
-    headers = {
-        'Content-Type': 'text/xml;charset=UTF-8',
-        'SOAPAction': 'http://webservices.amadeus.com/1ASIWASIAER/VLSSLQ_06_1_1A',
-    }
-    rq = '''<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:def="http://webservices.amadeus.com/definitions" xmlns:vls="http://xml.amadeus.com/VLSSLQ_06_1_1A">
-      <soapenv:Header>
-        <Action>http://webservices.amadeus.com/1ASIWASTAER/VLSSLQ_06_1_1A</Action>
-        <SessionId />
-      </soapenv:Header>
-      <soapenv:Body>
-        <Security_Authenticate>
-         <userIdentifier xmlns="http://xml.amadeus.com/VLSSLQ_06_1_1A">
-           <originIdentification>
-             <sourceOffice>{office}</sourceOffice>
-           </originIdentification>
-           <originatorTypeCode>U</originatorTypeCode>
-           <originator>{user}</originator>
-         </userIdentifier>
-         <dutyCode xmlns="http://xml.amadeus.com/VLSSLQ_06_1_1A">
-           <dutyCodeDetails>
-             <referenceQualifier>DUT</referenceQualifier>
-             <referenceIdentifier>SU</referenceIdentifier>
-           </dutyCodeDetails>
-         </dutyCode>
-         <systemDetails xmlns="http://xml.amadeus.com/VLSSLQ_06_1_1A">
-           <organizationDetails>
-             <organizationId>{organization}</organizationId>
-           </organizationDetails>
-         </systemDetails>
-         <passwordInfo xmlns="http://xml.amadeus.com/VLSSLQ_06_1_1A">
-           <dataLength>10</dataLength>
-           <dataType>E</dataType>
-           <binaryData>{password}</binaryData>
-         </passwordInfo>
-        </Security_Authenticate>
-        </soapenv:Body>
-    </soapenv:Envelope>'''.format(user='', password='', office='', organization='')
-    r = requests.post(AWS_GATE, headers=headers, data=rq)
-    print(r.text)
-
 
 def get_nonce(n: int=8) -> bytes:
     """Returns random byte string of length n
