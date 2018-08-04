@@ -53,14 +53,15 @@ def security_authenticate():
 
 
 def get_nonce(n=8):
-    """Returns random string of length n
+    """Returns random byte string of length n
 
     :param n: int, length of the returned string
     :return: random string
-    :rtype: str
+    :rtype: bytes
     """
     chars = string.printable
-    return ''.join(random.SystemRandom().choice(chars) for _ in range(n))
+    random_string = ''.join(random.SystemRandom().choice(chars) for _ in range(n))
+    return random_string.encode('ascii')
 
 
 def encode_base64(s):
