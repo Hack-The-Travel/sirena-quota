@@ -16,5 +16,5 @@ class TestAmadeus:
         timestamp = self.timestamp.encode('ascii')
         password = self.password.encode('ascii')
         password_digest = get_password_digest(nonce, timestamp, password)
-        password_digest_64 = base64.b64decode(password_digest).decode('utf-8')
+        password_digest_64 = base64.b64encode(password_digest).decode('utf-8')
         assert password_digest_64 == self.password_digest_64
