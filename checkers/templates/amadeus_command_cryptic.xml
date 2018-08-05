@@ -24,7 +24,7 @@
                 </messageFunctionDetails>
             </messageAction>
             <longTextString>
-                <textStringDetails>toqd/t-S7</textStringDetails>
+                <textStringDetails>toqd/t-{{ airline }}</textStringDetails>
             </longTextString>
         </Command_Cryptic>
     </soapenv:Body>

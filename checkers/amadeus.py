@@ -33,12 +33,13 @@ def generate_password_digest(nonce: bytes, timestamp: bytes, password: bytes) ->
 
 
 class AmadeusQuotaChecker(QuotaChecker):
-    def __init__(self, user: str, password: str, office_id: str, duty_code: str, endpoint: str):
+    def __init__(self, user: str, password: str, office_id: str, duty_code: str, airline: str, endpoint: str):
         QuotaChecker.__init__(self, template_dir='templates')
         self.user = user
         self.password = password
         self.office_id = office_id
         self.duty_code = duty_code
+        self.airline = airline
         self.endpoint = endpoint
 
     @staticmethod
@@ -83,6 +84,7 @@ class AmadeusQuotaChecker(QuotaChecker):
             'created': timestamp,
             'duty_code': self.duty_code,
             'pseudo_city_code': self.office_id,
+            'airline': self.airline,
         })
         rs = self.request(self.endpoint, headers=headers, data=rq)
         quota = QuotaResponse()
