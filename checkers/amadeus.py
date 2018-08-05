@@ -2,6 +2,7 @@
 import random
 import uuid
 import base64
+import re
 from hashlib import sha1
 from datetime import datetime
 
@@ -39,6 +40,19 @@ class AmadeusQuotaChecker(QuotaChecker):
         self.duty_code = duty_code
         self.endpoint = endpoint
 
+    @staticmethod
+    def extract_quota(ticket_quota_response):
+        matches = re.findall(r'<textStringDetails>([\S\s]+)<\/textStringDetails>', ticket_quota_response)
+        output_strings = str(matches[0]).split('\n')
+        tickets = None
+        tickets_matches = re.findall(r'TKTT\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-3])
+        tickets = int(tickets_matches[0])
+        emds = None
+        emds_matches = re.findall(r'EMDS\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-2])
+        emds = int(emds_matches[0])
+        return tickets, emds
+
+
     def get_quota(self):
         soap_action = 'http://webservices.amadeus.com/HSFREQ_07_3_1A'
         timestamp = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.105Z')
@@ -60,5 +74,6 @@ class AmadeusQuotaChecker(QuotaChecker):
             'pseudo_city_code': self.office_id,
         })
         rs = self.request(self.endpoint, headers=headers, data=rq)
+        print(rs)
         quota = QuotaResponse()
         return quota
