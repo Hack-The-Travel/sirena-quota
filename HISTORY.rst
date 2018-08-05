@@ -6,6 +6,8 @@ Release History
 2.0.0 (2018-08-03)
 ++++++++++++++++++
 
+- Birth of air-quota ✨🍰✨
+
 **Improvements**
 
 - Implement `AmadeusQuotaChecker` class to extract number of remaining tickets and EMDs
