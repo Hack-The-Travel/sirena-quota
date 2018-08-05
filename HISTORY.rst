@@ -3,6 +3,15 @@
 Release History
 ===============
 
+dev
++++
+
+**Bugfixes**
+
+- Fix verification of recipient email. AWS SES check is case-sensitive.
+- Add forgotten account parameter `alert` into conf sample.
+
+
 1.0.1 (2018-08-02)
 ++++++++++++++++++
 
