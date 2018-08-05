@@ -11,6 +11,7 @@ dev
 - Implement `AmadeusQuotaChecker` class to extract number of remaining tickets and EMDs
   from Amadeus direct stock offices via Amadeus Web Services (Header SOAP4.0).
 - Implement `SirenaQuotaChecker` class to make quota check flow for Amadeus and Sirena the same.
+- Redesign quota check flow with new classes.
 
 **Bugfixes**
 
