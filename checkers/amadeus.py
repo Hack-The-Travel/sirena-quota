@@ -40,7 +40,6 @@ def get_s7_quota():
     password = password.encode('ascii')
     duty_code = 'SU'
 
-
     endpoint = gateway + wsap
     soap_action = 'http://webservices.amadeus.com/HSFREQ_07_3_1A'
     timestamp = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.105Z')

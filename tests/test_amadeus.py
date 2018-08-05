@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 import base64
-from amadeus import get_password_digest, get_nonce
+from checkers import get_password_digest, get_nonce
 
 
 class TestAmadeus:
