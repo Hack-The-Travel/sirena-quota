@@ -51,7 +51,7 @@ class AmadeusChecker(Checker):
             'Content-Type': 'text/xml;charset=UTF-8',
             'SOAPAction': soap_action,
         }
-        rq = self.render_template('amadeus_command_cryptic.xml', {
+        rq = self.render_template('amadeus_command_cryptic.xml', context={
             'message_id': str(uuid.uuid4()),
             'soap_action': soap_action,
             'endpoint': self.endpoint,
