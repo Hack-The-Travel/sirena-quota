@@ -9,11 +9,10 @@ from .quotachecker import QuotaChecker, QuotaResponse
 
 
 def get_nonce(n: int=8) -> bytes:
-    """Returns random byte string of length n
+    """Return random byte string of length n.
 
-    :param n: int, length of the returned string
-    :return: random string
-    :rtype: bytes
+    :param n: length of the returned string.
+    :return: random string.
     """
     chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     random_string = ''.join(random.SystemRandom().choice(chars) for _ in range(n))
