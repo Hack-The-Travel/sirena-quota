@@ -16,6 +16,7 @@ dev
 
 - Fix verification of recipient email. AWS SES check is case-sensitive.
 - Add forgotten account parameter `alert` into conf sample.
+- Fix db test. It didn't work during the first run of tests.
 
 
 1.0.1 (2018-08-02)
