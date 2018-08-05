@@ -5,7 +5,7 @@ import base64
 from hashlib import sha1
 from datetime import datetime
 
-from .checker import Checker
+from .quotachecker import QuotaChecker
 
 
 def get_nonce(n: int=8) -> bytes:
@@ -32,10 +32,9 @@ def get_password_digest(nonce: bytes, timestamp: bytes, password: bytes) -> byte
     return sha1(nonce + timestamp + sha1(password).digest()).digest()
 
 
-class AmadeusChecker(Checker):
-    def __init__(self,
-                 user: str, password: str, office_id: str, duty_code: str, endpoint: str):
-        Checker.__init__(self, template_dir='templates')
+class AmadeusQuotaChecker(QuotaChecker):
+    def __init__(self, user: str, password: str, office_id: str, duty_code: str, endpoint: str):
+        QuotaChecker.__init__(self, template_dir='templates')
         self.user = user
         self.password = password
         self.office_id = office_id

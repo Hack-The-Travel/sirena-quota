@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-from .amadeus import AmadeusChecker
-from .sirena import SirenaChecker
+from .amadeus import AmadeusQuotaChecker
+from .sirena import SirenaQuotaChecker

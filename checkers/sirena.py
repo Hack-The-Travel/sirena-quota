@@ -1,15 +1,23 @@
 # -*- coding: utf-8 -*-
-from .checker import Checker
+import re
+from .quotachecker import QuotaChecker, QuotaResponse
 
 
-class SirenaChecker(Checker):
+class SirenaQuotaChecker(QuotaChecker):
     def __init__(self, user: str, password: str, endpoint: str):
-        Checker.__init__(self, template_dir='templates')
+        QuotaChecker.__init__(self, template_dir='templates')
         self.user = user
         self.password = password
         self.endpoint = endpoint
 
+    @staticmethod
+    def extract_ticket_quota(ticket_quota_response):
+        matches = re.findall(r'<quota>(\d+)<\/quota>', ticket_quota_response)
+        return int(matches[0])
+
     def get_quota(self):
         rq = self.render_template('sirena_get_ticket_quota.xml', context=None)
-        self.request(self.endpoint, auth=(self.user, self.password), data=rq)
-        return self.last_sent, self.last_received
+        rs = self.request(self.endpoint, auth=(self.user, self.password), data=rq)
+        quota = QuotaResponse()
+        quota.tickets = self.extract_ticket_quota(rs)
+        return quota
