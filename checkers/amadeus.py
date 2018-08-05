@@ -46,23 +46,17 @@ class AmadeusQuotaChecker(QuotaChecker):
     def extract_quota(ticket_quota_response: str) -> Tuple[int, int]:
         """Extract number of remaining tickets and EMDs.
 
+        Extract or die trying.
+
         :param ticket_quota_response: response of CommandCryptic service for toqd/t-YY request.
         :return: number of remaining tickets and EMDs.
         """
         matches = re.findall(r'<textStringDetails>([\S\s]+)<\/textStringDetails>', ticket_quota_response)
         output_strings = str(matches[0]).split('\n')
-        tickets = None
-        try:
-            tickets_matches = re.findall(r'TKTT\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-3])
-            tickets = int(tickets_matches[0])
-        except Exception:
-            pass
-        emds = None
-        try:
-            emds_matches = re.findall(r'EMDS\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-2])
-            emds = int(emds_matches[0])
-        except Exception:
-            pass
+        tickets_matches = re.findall(r'TKTT\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-3])
+        tickets = int(tickets_matches[0])
+        emds_matches = re.findall(r'EMDS\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-2])
+        emds = int(emds_matches[0])
         return tickets, emds
 
     def get_quota(self):
@@ -88,5 +82,8 @@ class AmadeusQuotaChecker(QuotaChecker):
         })
         rs = self.request(self.endpoint, headers=headers, data=rq)
         quota = QuotaResponse()
-        quota.tickets, quota.emds = self.extract_quota(rs)
+        try:
+            quota.tickets, quota.emds = self.extract_quota(rs)
+        except Exception:
+            pass
         return quota
