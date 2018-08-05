@@ -21,7 +21,10 @@ class Checker(object):
             self.__template_env = Environment(loader=FileSystemLoader(template_dir))
 
     def render_template(self, template_filename: str, context: dict = None) -> str:
-        """Renders a template into a string."""
+        """Renders a template into a string.
+
+        To use this method you must set `template_dir` argument of `__init__()` method.
+        """
         context = {} if context is None else context
         template = self.__template_env.get_template(template_filename)
         return template.render(context)
