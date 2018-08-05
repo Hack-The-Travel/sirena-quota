@@ -10,8 +10,8 @@ class Checker(object):
         #: Content of the response, in bytes
         self.last_received = None
 
-    def request(self, url: str, auth=None, headers=None, data=None):
-        r = requests.post(url, auth=auth, headers=headers, data=data)
+    def request(self, url: str, method: str = 'post', auth=None, headers=None, data=None):
+        r = requests.request(method, url, auth=auth, headers=headers, data=data)
         self.last_sent = data
         self.last_received = r.content
         r.raise_for_status()
