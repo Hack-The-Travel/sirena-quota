@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import pytest
 import base64
-from checkers import get_password_digest, get_nonce
+from checkers.amadeus import get_password_digest, get_nonce
 
 
-class TestAmadeus:
+class TestAmadeusUtils:
     @pytest.mark.parametrize(
         'nonce, timestamp, password, password_digest_64', (
             ('secretnonce10111', '2015-09-30T14:12:15Z', 'AMADEUS', '+LzcaRc+ndGAcZIXmq/N7xGes+k='),
