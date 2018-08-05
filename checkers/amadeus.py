@@ -79,6 +79,6 @@ class AmadeusQuotaChecker(QuotaChecker):
             'pseudo_city_code': self.office_id,
         })
         rs = self.request(self.endpoint, headers=headers, data=rq)
-        print(rs)
         quota = QuotaResponse()
+        quota.tickets, quota.emds = self.extract_quota(rs)
         return quota
