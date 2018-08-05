@@ -1,43 +1,13 @@
 # -*- coding: utf-8 -*-
-import re
-import requests
 import logging
 from utils import db_execute
+
 import conf
+from checkers import QuotaResponse, QuotaChecker, AmadeusQuotaChecker, SirenaQuotaChecker
 
 
-def extract_ticket_quota(ticket_quota_response):
-    matches = re.findall(r'<quota>(\d+)<\/quota>', ticket_quota_response)
-    return int(matches[0])
-
-
-def get_ticket_quota(user, password, gateway='https://ws.sirena-travel.ru/swc-main/bookingService'):
-    """Returns ticket quota for PoS (ППр).
-
-    This method calls `getTicketQuota` method of Sirena WS.
-
-    :param user: Sirena WS user with supervisor permission in the PoS.
-    :param password: user password.
-    :param gateway: (optional) Sirena WS gateway to call getTicketQuota method.
-    :return: ticket quota.
-    :rtype: int
-    """
-    rq = '''<soapenv:Envelope
-       xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-       xmlns:ser="http://service.swc.comtech/">
-       <soapenv:Header/>
-       <soapenv:Body>
-          <ser:getTicketQuota>
-             <dynamicId>0</dynamicId>
-          </ser:getTicketQuota>
-       </soapenv:Body>
-    </soapenv:Envelope>'''
-    r = requests.post(gateway, auth=(user, password), data=rq)
-    r.raise_for_status()
-    return extract_ticket_quota(r.text)
-
-
-def save_check(db_name, account_code, ticket_quota):
+def save_check(db_name, account_code, quota: QuotaResponse):
+    ticket_quota = quota.tickets
     db_execute(
         db_name,
         '''INSERT INTO quota_check (account, quota)
@@ -46,13 +16,23 @@ def save_check(db_name, account_code, ticket_quota):
     )
 
 
+def get_checker(account: dict) -> QuotaChecker:
+    gds = account['gds']
+    if gds == '1H':
+        return SirenaQuotaChecker(account['user'], account['password'], account['endpoint'])
+    if gds == '1A':
+        return AmadeusQuotaChecker(account['user'], account['password'], account['office_id'],
+                                   account['duty_code'], account['airline'], account['endpoint'])
+    return QuotaChecker()
+
+
 if __name__ == '__main__':
     for code, account in conf.accounts.items():
         try:
             save_check(
                 conf.db_name,
                 code,
-                get_ticket_quota(account['user'], account['password'])
+                get_checker(account).get_quota()
             )
             print('{:20} - ok'.format(code))
         except Exception as e:
