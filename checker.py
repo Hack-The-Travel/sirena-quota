@@ -7,12 +7,13 @@ from checkers import QuotaResponse, QuotaChecker, AmadeusQuotaChecker, SirenaQuo
 
 
 def save_check(db_name, account_code, quota: QuotaResponse):
-    ticket_quota = quota.tickets
+    tickets = 'NULL' if quota.tickets is None else quota.tickets
+    emds = 'NULL' if quota.emds is None else quota.emds
     db_execute(
         db_name,
-        '''INSERT INTO quota_check (account, quota)
-           VALUES ('{account}', {quota})
-        '''.format(account=account_code, quota=ticket_quota)
+        '''INSERT INTO quota_check (account, remaining_tickets, remaining_emds)
+           VALUES ('{account}', {tickets}, {emds})
+        '''.format(account=account_code, tickets=tickets, emds=emds)
     )
 
 
