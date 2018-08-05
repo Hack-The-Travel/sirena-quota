@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import requests
-import string
 import random
 import uuid
 import base64
@@ -15,7 +14,7 @@ def get_nonce(n: int=8) -> bytes:
     :return: random string
     :rtype: bytes
     """
-    chars = string.printable
+    chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     random_string = ''.join(random.SystemRandom().choice(chars) for _ in range(n))
     return random_string.encode('ascii')
 
