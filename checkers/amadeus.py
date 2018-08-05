@@ -21,13 +21,12 @@ def get_nonce(n: int=8) -> bytes:
 
 
 def generate_password_digest(nonce: bytes, timestamp: bytes, password: bytes) -> bytes:
-    """Generates password digest
+    """Generate password digest.
 
-    :param nonce: bytes, random string.
-    :param timestamp: bytes, current UTC timestamp in ISO format, e.g. '2018-08-04T17:13:14.105Z'.
-    :param password: bytes, raw password obtained from Amadeus.
+    :param nonce: random string.
+    :param timestamp: current UTC timestamp in ISO format, e.g. '2018-08-04T17:13:14.105Z'.
+    :param password: raw password obtained from Amadeus.
     :return: password digest.
-    :rtype: bytes
     """
     return sha1(nonce + timestamp + sha1(password).digest()).digest()
 
