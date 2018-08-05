@@ -5,7 +5,7 @@ import base64
 from hashlib import sha1
 from datetime import datetime
 
-from .quotachecker import QuotaChecker
+from .quotachecker import QuotaChecker, QuotaResponse
 
 
 def get_nonce(n: int=8) -> bytes:
@@ -61,5 +61,6 @@ class AmadeusQuotaChecker(QuotaChecker):
             'duty_code': self.duty_code,
             'pseudo_city_code': self.office_id,
         })
-        self.request(self.endpoint, headers=headers, data=rq)
-        return self.last_sent, self.last_received
+        rs = self.request(self.endpoint, headers=headers, data=rq)
+        quota = QuotaResponse()
+        return quota
