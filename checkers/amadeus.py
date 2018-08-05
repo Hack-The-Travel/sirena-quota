@@ -5,6 +5,7 @@ import base64
 import re
 from hashlib import sha1
 from datetime import datetime
+from typing import Tuple
 
 from .quotachecker import QuotaChecker, QuotaResponse
 
@@ -41,7 +42,12 @@ class AmadeusQuotaChecker(QuotaChecker):
         self.endpoint = endpoint
 
     @staticmethod
-    def extract_quota(ticket_quota_response):
+    def extract_quota(ticket_quota_response: str) -> Tuple[int, int]:
+        """Extract number of remaining tickets and EMDs.
+
+        :param ticket_quota_response: response of CommandCryptic service for toqd/t-YY request.
+        :return: number of remaining tickets and EMDs.
+        """
         matches = re.findall(r'<textStringDetails>([\S\s]+)<\/textStringDetails>', ticket_quota_response)
         output_strings = str(matches[0]).split('\n')
         tickets = None
