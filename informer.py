@@ -78,6 +78,9 @@ def send_mail(sender, recipient, subject, body, smtp_user, smtp_password,
     :param smtp_user: str, login of smtp user
     :param smtp_password: str, password of smtp user
     """
+    # At AWS side Verification Check is case-sensitive - WTF?!
+    recipient = recipient.lower()
+
     body_text, body_html = body
     msg = MIMEMultipart('alternative')
     msg['Subject'] = subject
