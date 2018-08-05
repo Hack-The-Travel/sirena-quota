@@ -115,8 +115,8 @@ if __name__ == '__main__':
         })
         alert = info_items[-1]['alert'] or alert
     message_body = prepare_body(info_items, conf.sender[0])
-    send_mail(conf.sender, conf.recipient_info, 'Состояние стоков в Сирене',
+    send_mail(conf.sender, conf.recipient_info, 'Состояние стоков',
               message_body, conf.smtp_user, conf.smtp_password)
     if alert:
-        send_mail(conf.sender, conf.recipient_alert, 'Срочно пополните сток в Сирене',
+        send_mail(conf.sender, conf.recipient_alert, 'Срочно пополните сток',
                   message_body, conf.smtp_user, conf.smtp_password)
