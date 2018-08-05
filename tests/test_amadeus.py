@@ -17,5 +17,5 @@ class TestAmadeus:
         password_digest_64 = base64.b64encode(password_digest).decode('utf-8')
         assert password_digest_64 == password_digest_64
 
-    def test_get_nonce_lenght(self):
+    def test_get_nonce_length(self):
         assert len(get_nonce(100)) == 100
