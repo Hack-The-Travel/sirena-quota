@@ -3,8 +3,7 @@ from .checker import Checker
 
 
 class SirenaChecker(Checker):
-    def __init__(self,
-                 user: str, password: str, endpoint: str):
+    def __init__(self, user: str, password: str, endpoint: str):
         Checker.__init__(self, template_dir='templates')
         self.user = user
         self.password = password
