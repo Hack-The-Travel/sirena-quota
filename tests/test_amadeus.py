@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 import base64
-from checkers.amadeus import get_password_digest, get_nonce
+from checkers.amadeus import generate_password_digest, get_nonce
 
 
 class TestAmadeusUtils:
@@ -13,7 +13,7 @@ class TestAmadeusUtils:
         nonce = nonce.encode('ascii')
         timestamp = timestamp.encode('ascii')
         password = password.encode('ascii')
-        password_digest = get_password_digest(nonce, timestamp, password)
+        password_digest = generate_password_digest(nonce, timestamp, password)
         password_digest_64 = base64.b64encode(password_digest).decode('utf-8')
         assert password_digest_64 == password_digest_64
 

@@ -20,7 +20,7 @@ def get_nonce(n: int=8) -> bytes:
     return random_string.encode('ascii')
 
 
-def get_password_digest(nonce: bytes, timestamp: bytes, password: bytes) -> bytes:
+def generate_password_digest(nonce: bytes, timestamp: bytes, password: bytes) -> bytes:
     """Generates password digest
 
     :param nonce: bytes, random string.
@@ -45,7 +45,7 @@ class AmadeusQuotaChecker(QuotaChecker):
         soap_action = 'http://webservices.amadeus.com/HSFREQ_07_3_1A'
         timestamp = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.105Z')
         nonce = get_nonce()
-        password_digest = get_password_digest(nonce, timestamp.encode('ascii'), self.password.encode('ascii'))
+        password_digest = generate_password_digest(nonce, timestamp.encode('ascii'), self.password.encode('ascii'))
         headers = {
             'Content-Type': 'text/xml;charset=UTF-8',
             'SOAPAction': soap_action,
