@@ -1,8 +1,11 @@
-sirena-quota
-============
+air-quota
+=========
 
-It's the best way to control tickets quota in Sirena.
-Notice, these scripts works with Sirena Web Services (SWC), not with Sirena XML Gate.
+It's the best way to control tickets and EMDs quota in Amadeus and Sirena.
+
+GDS dependencies:
+- Amadeus Web Services (AWS), SOAP Header 4.0.
+- Sirena Web Services (SWC), not Sirena XML Gate.
 
 Behold, the power of:
 ```
