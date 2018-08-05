@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-import requests
 import random
 import uuid
 import base64
 from hashlib import sha1
 from datetime import datetime
+
+from .checker import Checker
 
 
 def get_nonce(n: int=8) -> bytes:
@@ -31,9 +32,10 @@ def get_password_digest(nonce: bytes, timestamp: bytes, password: bytes) -> byte
     return sha1(nonce + timestamp + sha1(password).digest()).digest()
 
 
-class AmadeusChecker(object):
+class AmadeusChecker(Checker):
     def __init__(self,
                  user: str, password: str, office_id: str, duty_code: str, endpoint: str):
+        Checker.__init__(self)
         self.user = user
         self.password = password
         self.office_id = office_id
@@ -86,9 +88,5 @@ class AmadeusChecker(object):
             created=timestamp,
             duty_code=self.duty_code, pseudo_city_code=self.office_id,
         )
-        r = requests.post(self.endpoint, headers=headers, data=rq)
-        return rq, r.text
-
-
-if __name__ == '__main__':
-    get_s7_quota()
+        self.request(self.endpoint, headers=headers, data=rq)
+        return self.last_sent, self.last_received
