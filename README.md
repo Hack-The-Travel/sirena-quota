@@ -9,9 +9,10 @@ GDS dependencies:
 
 Behold, the power of:
 ```
-$ python checker.py
-OTA.UT               - ok
-$ python informer.py
+$ python check.py
+OTA.1H.UT             - ok
+OTA.1A.S7             - ok
+$ python inform.py
 ```
 
 
