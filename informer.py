@@ -16,7 +16,7 @@ def prepare_body(accounts_info, sender_name):
     >>>     'code': 'OTA.TCH',
     >>>     'quota': 985,
     >>>     'datetime': '2018-06-23 19:26:16 (MSK)',
-    >>>     'alert': 200,
+    >>>     'alert': False,
     >>> }]
 
     :param accounts_info: list, accounts info, see above description of element structure.
