@@ -45,13 +45,18 @@ class AmadeusQuotaChecker(QuotaChecker):
         matches = re.findall(r'<textStringDetails>([\S\s]+)<\/textStringDetails>', ticket_quota_response)
         output_strings = str(matches[0]).split('\n')
         tickets = None
-        tickets_matches = re.findall(r'TKTT\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-3])
-        tickets = int(tickets_matches[0])
+        try:
+            tickets_matches = re.findall(r'TKTT\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-3])
+            tickets = int(tickets_matches[0])
+        except Exception:
+            pass
         emds = None
-        emds_matches = re.findall(r'EMDS\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-2])
-        emds = int(emds_matches[0])
+        try:
+            emds_matches = re.findall(r'EMDS\ +\d+\ +\d+\ +\d+\ +(\d+)', output_strings[-2])
+            emds = int(emds_matches[0])
+        except Exception:
+            pass
         return tickets, emds
-
 
     def get_quota(self):
         soap_action = 'http://webservices.amadeus.com/HSFREQ_07_3_1A'
