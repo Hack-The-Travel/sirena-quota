@@ -13,6 +13,8 @@ class SirenaQuotaChecker(QuotaChecker):
     @staticmethod
     def extract_ticket_quota(ticket_quota_response):
         matches = re.findall(r'<quota>(\d+)<\/quota>', ticket_quota_response)
+        if len(matches) == 0:
+            return None
         return int(matches[0])
 
     def get_quota(self):
